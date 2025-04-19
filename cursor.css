@@ -275,6 +275,7 @@ a:hover {
   aspect-ratio: 1/1; /* Ensure the image is perfectly square */
   object-fit: cover; /* Ensures the image covers the area without distortion */
   transform-origin: center center;
+  animation: none; /* Remove the CSS animation to avoid conflict with JS transformations */
 }
 
 /* Animation keyframes */

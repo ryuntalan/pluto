@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollText = document.querySelector('.scroll-text');
   const plutoImage = document.querySelector('.pluto-image');
   
+  // Variables for the continuous rotation
+  let rotationAngle = 0;
+  let lastTimestamp = 0;
+  
   // ------------- POSITION CALCULATION -------------
   // Get the initial position of the scroll section
   const sectionTop = scrollSection.offsetTop;
@@ -59,9 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // FORMULA: translateX controls horizontal position, translateY controls vertical position
       imageContainer.style.transform = `translateX(${easeProgress * targetXPosition}%) translateY(${yOffset}vh)`;
       
-      // Rotate and scale the image itself
-      // ADJUST rotation (60deg) and scale (0.4) to control final appearance
-      plutoImage.style.transform = `rotate(${easeProgress * 60}deg) scale(${1 - easeProgress * 0.4})`;
+      // Scale the image itself while preserving the continuous rotation
+      const scaleValue = 1 - easeProgress * 0.4;
+      updatePlutoImageTransform(scaleValue);
       
       // ------------- TEXT ANIMATION PARAMETERS -------------
       // Text completes its animation at 70% of the overall scroll progress
@@ -99,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // ------------- RESET POSITION -------------
       // Return everything to starting position when scrolled to top
       imageContainer.style.transform = '';
-      plutoImage.style.transform = 'rotate(0deg)';
+      // Keep continuous rotation but reset scale to 1
+      updatePlutoImageTransform(1);
       textContainer.style.opacity = '0';
       textContainer.style.transform = 'translateY(-50%) translateX(-50px)';
       scrollHeader.style.opacity = '0';
@@ -109,12 +114,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
+  // Update the Pluto image transform with both rotation and scale
+  function updatePlutoImageTransform(scale) {
+    plutoImage.style.transform = `rotate(${rotationAngle}deg) scale(${scale})`;
+  }
+  
+  // Continuous rotation animation function
+  function animateRotation(timestamp) {
+    if (!lastTimestamp) {
+      lastTimestamp = timestamp;
+    }
+    
+    // Calculate time difference since last frame
+    const deltaTime = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+    
+    // Increment rotation angle (adjust speed by changing the divisor)
+    // 6000 means a full 360° rotation takes 60 seconds
+    // 12000 means a full 360° rotation takes 120 seconds (2 minutes)
+    rotationAngle = (rotationAngle + deltaTime / 96000 * 360) % 360;
+    
+    // Apply the transform with current rotation angle and scale
+    // Get current scale from transform if it exists
+    const currentTransform = plutoImage.style.transform;
+    const scaleMatch = currentTransform.match(/scale\(([^)]+)\)/);
+    const currentScale = scaleMatch ? parseFloat(scaleMatch[1]) : 1;
+    
+    // Update the transform
+    updatePlutoImageTransform(currentScale);
+    
+    // Continue animation loop
+    requestAnimationFrame(animateRotation);
+  }
+  
   // ------------- EASING FUNCTION -------------
   // Creates a smooth deceleration curve for natural-feeling animation
   // x = input from 0 to 1, returns a value from 0 to 1 but with easing applied
   function easeOutQuart(x) {
     return 1 - Math.pow(1 - x, 4);
   }
+  
+  // Start continuous rotation
+  requestAnimationFrame(animateRotation);
   
   // Initialize animation state on page load
   window.dispatchEvent(new Event('scroll'));
