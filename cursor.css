@@ -1,0 +1,408 @@
+/* Font declarations */
+.instrument-serif-regular {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.instrument-serif-regular-italic {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.ibm-plex-sans-light {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+  font-variation-settings:
+  "wdth" 100;
+}
+
+
+/* Page styling - Moving to top for priority */
+body {
+  background-color: #000 !important; /* Adding !important to enforce */
+  color: #fff;
+  font-family: 'IBM Plex Sans', 'Instrument Serif', 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 50vh;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px; /* Add padding for the fixed navbar */
+}
+
+html {
+  background-color: #000; /* Adding to html element as well */
+}
+
+/* Hide default cursor on all elements */
+* {
+  cursor: none !important;
+}
+
+/* Navigation Bar Styles */
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 90%; /* Reduced from 100% to prevent cutoff */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5%;
+  z-index: 1000;
+  background-color: #00f; /* User's change preserved */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-logo a {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  font-family: 'IBM Plex Sans', 'Instrument Serif', 'Inter', sans-serif;
+}
+
+.nav-links {
+  display: flex;
+  gap: 3rem;
+  margin-right: 1rem; /* Added to prevent contact button cutoff */
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  /* User removed opacity: 0.7 - keeping that change */
+  transition: opacity 0.3s ease;
+  font-family: 'IBM Plex Sans', 'Instrument Serif', 'Inter', sans-serif;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+  color: white;
+}
+
+/* Base styles for cursor elements */
+.cursor-outer,
+.cursor-inner,
+.cursor-trail {
+  pointer-events: none; /* Ensure cursor doesn't interfere with element interactions */
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform; /* Optimize for animations */
+  transform-origin: center center;
+}
+
+/* Outer cursor (larger circle with border) */
+.cursor-outer {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background-color: #fff;
+  transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Inner cursor (smaller dot) - keeping this for reference but it's not being used */
+.cursor-inner {
+  display: none; /* Hide the inner cursor */
+  width: 6px;
+  height: 6px;
+  background-color: #fff;
+  mix-blend-mode: difference;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Trail elements */
+.cursor-trail {
+  width: 40px;
+  height: 40px;
+  background-color: #ffffff;
+  transition: transform 0.05s linear; /* Quick transition for smoothness */
+}
+
+/* Hover state for interactive elements */
+.cursor-outer.hover {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.cursor-inner.hover {
+  width: 4px;
+  height: 4px;
+  opacity: 0.6;
+}
+
+.cursor-trail.hover {
+  opacity: 0.8;
+  transform: scale(1.2);
+}
+
+/* Active state (when clicking) */
+.cursor-outer.active {
+  transform: translate(calc(var(--x) - 15px), calc(var(--y) - 15px)) scale(0.9);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.cursor-inner.active {
+  transform: translate(calc(var(--x) - 3px), calc(var(--y) - 3px)) scale(0.7);
+}
+
+.cursor-trail.active {
+  transform: translate(calc(var(--x) - 6px), calc(var(--y) - 6px)) scale(0.9);
+}
+
+/* Media query for touch devices where custom cursor is unnecessary */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-outer, .cursor-inner, .cursor-trail {
+    display: none;
+  }
+  * {
+    cursor: auto !important;
+  }
+}
+
+/* Rest of page styling */
+.container {
+  max-width: 1000px;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Instrument Serif';
+  font-size: 8rem;
+  margin: 6rem auto 0;
+  background: #fff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 100;
+ 
+}
+
+p {
+  font-size: 1.5rem;
+  margin: 0rem;
+  font-weight: 200;
+  font-family: 'IBM Plex Sans', 'Instrument Serif', 'Nunito', sans-serif;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.button {
+  padding: 0.8rem 1.5rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: 'SF Compact', 'Instrument Serif', 'VAG Rounded', 'Inter', 'Nunito', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #222;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: 'SF Compact', 'Instrument Serif', 'VAG Rounded', 'Inter', 'Nunito', sans-serif;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+a {
+  color: #4169e1;
+  text-decoration: none;
+  transition: color 0.3s;
+  font-family: 'SF Compact', 'Instrument Serif', 'VAG Rounded', 'Inter', 'Nunito', sans-serif;
+}
+
+a:hover {
+  color: #8a2be2;
+}
+
+/* Pluto image styles */
+.pluto-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.pluto-image {
+  max-width: 75%; /* Larger size initially */
+  height: auto;
+  border-radius: 50%; /* Make image circular */
+  aspect-ratio: 1/1; /* Ensure the image is perfectly square */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  transform-origin: center center;
+}
+
+/* Animation keyframes */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Scroll effect styles */
+.scroll-section {
+  width: 100%;
+  min-height: 150vh; /* Taller to ensure content is below the fold */
+  position: relative;
+  overflow: hidden;
+  margin-top: 5vh;
+  padding: 5vh 0;
+}
+
+.scroll-container {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  padding: 0 2rem;
+  flex-direction: row-reverse; /* Reverse the order so text is on left by default */
+}
+
+.image-side {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center;
+  position: relative;
+  z-index: 1;
+}
+
+.text-side {
+  width: 40%;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  position: absolute; /* Position it absolutely */
+  left: 0; /* Start from left side */
+  top: 50%; /* Center vertically */
+  z-index: 2;
+
+  padding-left: 5rem;
+}
+
+.scroll-header {
+  font-family: 'Instrument Serif';
+  font-size: 4rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scroll-text {
+  font-family: 'IBM Plex Sans';
+  font-size: 1.2rem;
+  line-height: 1.6;
+  font-weight: 200;
+  opacity: 0;
+  transform: translateY(20px);
+  max-width: 600px;
+}
+
+/* Animation classes added by JavaScript */
+.image-side.scrolled {
+  transform: translateX(60%) scale(0.75);
+}
+
+.text-side.scrolled {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-header.scrolled,
+.scroll-text.scrolled {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 1.5rem 5%;
+  }
+  
+  .nav-links {
+    gap: 1.5rem;
+  }
+  
+  .scroll-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .image-side {
+    width: 100%;
+    margin-top: 10vh;
+  }
+  
+  .text-side {
+    width: 100%;
+    padding: 2rem 1rem;
+    position: relative;
+    top: 0;
+    transform: none;
+    margin-top: 2rem;
+  }
+  
+  .scroll-header {
+    font-size: 2.5rem;
+  }
+  
+  .scroll-section {
+    background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+  }
+} 
