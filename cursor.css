@@ -35,10 +35,26 @@ body {
   align-items: center;
   justify-content: center;
   padding-top: 100px; /* Add padding for the fixed navbar */
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
 }
 
 html {
   background-color: #000; /* Adding to html element as well */
+  /* Apply the same scrollbar hiding to html for wider browser compatibility */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera on html element */
+html::-webkit-scrollbar {
+  display: none;
 }
 
 /* Hide default cursor on all elements */
